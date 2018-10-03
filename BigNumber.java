@@ -9,10 +9,18 @@ public class BigNumber
        
    }
    
-   //Constructor that accepts a number
-   public BigNumber(int x)
-   {
-       
+   /*
+    * Constructor that accepts a Integer value 
+    * Converts that integer into a string and then places
+    * 	 each value into a linked list based on its position
+    */
+   public BigNumber(Integer x){
+	   LinkedList<Integer> numList = new LinkedList<>();
+	   String y = x.toString();
+	   
+	   for(int i = 0; i < y.length(); i++) {
+		   numList.add((int) y.charAt(i));
+	   }
    }
    
    public BigNumber add(BigNumber y)
