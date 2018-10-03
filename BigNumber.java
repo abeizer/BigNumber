@@ -6,7 +6,7 @@ public class BigNumber
    //Default Constructor
    public BigNumber()
    {
-       
+       LinkedList<Integer> numList = new LinkedList<>();
    }
    
    /*
