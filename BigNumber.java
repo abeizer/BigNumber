@@ -11,7 +11,8 @@ import java.util.LinkedList;
 
 public class BigNumber 
 {
-	private LinkedList<Integer> bitList;
+	private LinkedList<Integer> numList;
+	private static int BASE = 16; //This gives us enough of a range to deal with the number 2168211218041261, as assigned.
 
 	/**
 	 * Default Constructor for BigNumber. Initializes an empty LinkedList
@@ -19,23 +20,37 @@ public class BigNumber
 	 */
 	public BigNumber() 
 	{
-		this.bitList = new LinkedList<>();
+		this.numList = new LinkedList<Integer>();
 	}
 
 	/**
-	 * Constructor that initializes BigNumber with a specific value.
+	 * Constructor that initializes BigNumber with a specific value in the form of Tens complement.
 	 * 
-	 * @param x
-	 *            a String of bits representing a number in base 10.
+	 * @param x a String representing a decimal number
 	 */
 	public BigNumber(String x) 
 	{
-		this.bitList = new LinkedList<>();
-
-		for (int i = 0; i < x.length(); i++) 
+		this.numList = new LinkedList<>();
+		
+		// If the number is negative, we will need to remember this
+		// and we must remove the negative sign so that we can parse the String into
+		// our LinkedList.
+		boolean isNegative = false;
+		if(x.startsWith("-"))
 		{
-			bitList.add((int) x.charAt(i));
+			isNegative = true;
+			x = x.substring(1);
 		}
+		
+		// Now we have a positive number in decimal form
+		// Each position n of the linked list represents 10^n
+		for(int i = 0; i < x.length(); i++) 
+		{
+			numList.add(Character.getNumericValue(x.charAt(i)));
+		}
+		
+		//TODO: Convert to 10s complement
+
 	}
 
 	public BigNumber add(BigNumber y)
@@ -75,7 +90,8 @@ public class BigNumber
 
 	public String toString() 
 	{
-		return "";
+		//TODO: Convert the numList from 10s complement before returning
+		return this.numList.toString();
 	}
 
 	public int compareTo(BigNumber y) 
