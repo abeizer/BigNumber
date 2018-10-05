@@ -2,24 +2,28 @@ import java.util.LinkedList;
 
 public class BigNumber
 {
-   private LinkedList x;
-   //Default Constructor
+   private LinkedList<Integer> bitList;
+   
+   /**
+    * Default Constructor for BigNumber.
+    * Initializes an empty LinkedList representing the bits of the BigNumber.
+    */
    public BigNumber()
    {
-       LinkedList<Integer> numList = new LinkedList<>();
+       this.bitList = new LinkedList<>();
    }
    
-   /*
-    * Constructor that accepts a Integer value 
-    * Converts that integer into a string and then places
-    * 	 each value into a linked list based on its position
-    */
-   public BigNumber(Integer x){
-	   LinkedList<Integer> numList = new LinkedList<>();
-	   String y = x.toString();
+	/**
+	 * Constructor that initializes BigNumber with a specific value.
+	 * @param x a String of bits representing a number in base 10.
+	 */
+   public BigNumber(String x)
+   {
+	   this.bitList = new LinkedList<>();
 	   
-	   for(int i = 0; i < y.length(); i++) {
-		   numList.add((int) y.charAt(i));
+	   for(int i = 0; i < x.length(); i++) 
+	   {
+		   bitList.add((int) x.charAt(i));
 	   }
    }
    
@@ -79,7 +83,7 @@ public class BigNumber
    
    public BigNumber[] factor()
    {
-      //return
+      return (new BigNumber[2]);
    }
    
 }
