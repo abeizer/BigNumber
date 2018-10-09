@@ -12,7 +12,6 @@ import java.util.LinkedList;
 public class BigNumber 
 {
 	private LinkedList<Integer> numList;
-	private static int BASE = 16; //This gives us enough of a range to deal with the number 2168211218041261, as assigned.
 
 	/**
 	 * Default Constructor for BigNumber. Initializes an empty LinkedList
@@ -95,6 +94,7 @@ public class BigNumber
 	public BigNumber negate() 
 	{
 		boolean trailingZero = true;	// Whether we are currently looking at a trailing 0
+		
 		for(int i = numList.size() - 1; i >= 0; i--)
 		{
 			// If we encounter a zero and it is a trailing zero, then we do nothing to it
@@ -128,18 +128,24 @@ public class BigNumber
 	public String toString() 
 	{
 		StringBuilder s = new StringBuilder();
+		LinkedList<Integer> temp = numList;
 		
 		//If value is negative, make sure to negate first and return with a "-" sign
 		if(numList.get(0) == 9)
 		{
 			negate();
 			s.append("-");
-		}
 
+			// Store the result of the negation so that we can use it, then
+			// negate numList again so that the contents of this object do not change
+			temp = numList;
+			negate();
+		}
+		
 		//Ignore the highest order integer, because it only represents the sign.
-		for(int i = 1; i < numList.size(); i++)
+		for(int i = 1; i < temp.size(); i++)
 		{
-			s.append(numList.get(i));
+			s.append(temp.get(i));
 		}
 
 		return s.toString();
@@ -152,7 +158,7 @@ public class BigNumber
 
 	public int sign() 
 	{
-		return 0;
+		return (numList.get(0) < 5 ? 1 : -1);
 	}
 
 	public void normalize() {
