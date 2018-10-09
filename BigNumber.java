@@ -49,8 +49,19 @@ public class BigNumber
 			numList.add(Character.getNumericValue(x.charAt(i)));
 		}
 		
-		//TODO: Convert to 10s complement
-
+		// If the number was positive, we have to make sure the highest order digit is less than 5
+		if(!isNegative && numList.get(0) > 5)
+		{ 
+			numList.addFirst(0);
+		}
+		else	// If the number was negative, we have to negate the value in numList
+		{
+			negate();
+			// Then we need to make sure we know this value is negative by inserting 9
+			// as the highest order digit
+			numList.addFirst(9);
+		}
+		
 	}
 
 	public BigNumber add(BigNumber y)
@@ -78,9 +89,9 @@ public class BigNumber
 		return this;
 	}
 
-	public BigNumber negate() 
+	public void negate() 
 	{
-		return this;
+
 	}
 
 	public boolean equals(BigNumber y) 
