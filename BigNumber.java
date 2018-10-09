@@ -49,13 +49,10 @@ public class BigNumber
 			numList.add(Character.getNumericValue(x.charAt(i)));
 		}
 		
-		// If the number was positive, we have to make sure the highest order digit is less than 5
+		// If the number was positive, insert a leading 0.
 		if(!isNegative)
 		{ 
-			if(numList.get(0) > 5)
-			{
-				numList.addFirst(0);
-			}
+			numList.addFirst(0);
 		}
 		else	// If the number was negative, we have to negate the value in numList
 		{
@@ -125,10 +122,27 @@ public class BigNumber
 		return false;
 	}
 
+	/**
+	 * @return the value stored in BigNumber as a String
+	 */
 	public String toString() 
 	{
-		//TODO: If value is negative, make sure to negate and return with a "-" sign
-		return this.numList.toString();
+		StringBuilder s = new StringBuilder();
+		
+		//If value is negative, make sure to negate first and return with a "-" sign
+		if(numList.get(0) == 9)
+		{
+			negate();
+			s.append("-");
+		}
+
+		//Ignore the highest order integer, because it only represents the sign.
+		for(int i = 1; i < numList.size(); i++)
+		{
+			s.append(numList.get(i));
+		}
+
+		return s.toString();
 	}
 
 	public int compareTo(BigNumber y) 
