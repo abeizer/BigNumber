@@ -92,9 +92,32 @@ public class BigNumber
 		return this;
 	}
 
-	public void negate() 
+	/**
+	 * Negate the value stored in BigNumber
+	 */
+	public BigNumber negate() 
 	{
-
+		boolean trailingZero = true;	// Whether we are currently looking at a trailing 0
+		for(int i = numList.size() - 1; i >= 0; i--)
+		{
+			// If we encounter a zero and it is a trailing zero, then we do nothing to it
+			// If it is not a trailing zero, then we must replace it with a 9.
+			if(numList.get(i) == 0)
+			{
+				if(!trailingZero)
+				{
+					numList.set(i, 9);
+				}
+			}
+			else
+			{
+				// If this is the first non-zero integer, then we subtract it from 10. If not, then subtract from 9.
+				numList.set(i, (trailingZero ? 10 : 9) - numList.get(i));
+				trailingZero = false;
+			}
+		}
+		
+		return this;
 	}
 
 	public boolean equals(BigNumber y) 
@@ -104,7 +127,7 @@ public class BigNumber
 
 	public String toString() 
 	{
-		//TODO: Convert the numList from 10s complement before returning
+		//TODO: If value is negative, make sure to negate and return with a "-" sign
 		return this.numList.toString();
 	}
 

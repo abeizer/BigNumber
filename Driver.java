@@ -8,7 +8,7 @@ public class Driver
 		System.out.println(x);
 		
 		BigNumber y = new BigNumber("-280");
-		System.out.println(y);	//negate method not yet complete
+		System.out.println(y);
 	}
 
 }
