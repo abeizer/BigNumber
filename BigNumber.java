@@ -50,8 +50,9 @@ public class BigNumber
 		}
 		
 		// If the number was positive, we have to make sure the highest order digit is less than 5
-		if(!isNegative && numList.get(0) > 5)
+		if(!isNegative)
 		{ 
+			if(numList.get(0) > 5)
 			numList.addFirst(0);
 		}
 		else	// If the number was negative, we have to negate the value in numList
@@ -89,9 +90,31 @@ public class BigNumber
 		return this;
 	}
 
-	public void negate() 
+	/**
+	 * Negate the value stored in BigNumber
+	 */
+	public BigNumber negate() 
 	{
-
+		boolean trailingZero = false;	// Whether we are currently looking at a trailing 0
+		for(int i = numList.size() - 1; i >= 0; i--)
+		{
+			// If we encounter a zero and it is a trailing zero, then we do nothing to it
+			// If it is not a trailing zero, then we must replace it with a 9.
+			if(numList.get(i) == 0)
+			{
+				if(!trailingZero)
+				{
+					numList.set(i, 9);
+				}
+			}
+			else
+			{
+				trailingZero = false;
+				numList.set(i, (9 - numList.get(i)));
+			}
+		}
+		
+		return this;
 	}
 
 	public boolean equals(BigNumber y) 
@@ -101,7 +124,7 @@ public class BigNumber
 
 	public String toString() 
 	{
-		//TODO: Convert the numList from 10s complement before returning
+		//TODO: If value is negative, make sure to negate and return with a "-" sign
 		return this.numList.toString();
 	}
 
