@@ -50,9 +50,12 @@ public class BigNumber
 		}
 		
 		// If the number was positive, we have to make sure the highest order digit is less than 5
-		if(!isNegative && numList.get(0) > 5)
+		if(!isNegative)
 		{ 
-			numList.addFirst(0);
+			if(numList.get(0) > 5)
+			{
+				numList.addFirst(0);
+			}
 		}
 		else	// If the number was negative, we have to negate the value in numList
 		{
