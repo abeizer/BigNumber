@@ -190,9 +190,48 @@ public class BigNumber
 		return s.toString();
 	}
 
+	/**
+	 * Compares the BigNumber value against another BigNumber value.
+	 * @param y A BigNumber to compare against
+	 * @return -1 if compared against a larger number, 0 if equal, or 1 if compared against a smaller number
+	 */
 	public int compareTo(BigNumber y) 
 	{
-		return -1;
+		LinkedList<Integer> numY = y.toList();
+		
+		// We can tell right away if one number is larger than the other if their signs are different
+		int xSign = sign(), ySign = y.sign();
+		int xLen = numList.size(), yLen = numY.size();
+		if(xSign != ySign) 
+		{
+			if(xSign > ySign) // sign of x is positive and sign of y is negative
+			{
+				return 1;
+			}
+			else	// sign of y is positive and sign of x is negative
+			{
+				return -1;
+			}
+		}
+		// The sign of each number is the same. We can try comparing the length of each number.
+		else if(xLen != yLen)	
+		{
+			if(xLen > yLen)	// this has more digits than y
+			{
+				return 1;
+			}
+			else	// y has more digits than x
+			{
+				return -1;
+			}
+		}
+		// The sign AND length of each number is the same
+		else
+		{
+			//TODO: finish
+			// compare digit by digit. if the loop finishes, then they are equal. if the loop breaks early, compare the different digits to see which was larger
+			return -1;
+		}
 	}
 
 	public int sign() 
