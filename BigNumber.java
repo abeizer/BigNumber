@@ -41,6 +41,9 @@ public class BigNumber
 			x = x.substring(1);
 		}
 		
+		//TODO: Remove any leading zeroes from the user's input so they do not contribute to
+		// errors in equals() and compareTo().
+		
 		// Now we have a positive number in decimal form
 		// Each position n of the linked list represents 10^n
 		for(int i = 0; i < x.length(); i++) 
@@ -117,13 +120,49 @@ public class BigNumber
 		return this;
 	}
 
+	/**
+	 * 
+	 * @param y Another BigNumber to compare with
+	 * @return true if both BigNumbers are equal
+	 */
 	public boolean equals(BigNumber y) 
 	{
-		return false;
+		LinkedList<Integer> numY = y.toList();
+		
+		// If the two numbers do not have the same number of digits, then they are not equal
+		// The constructor should trim any leading zeroes in the user's input so that 
+		// non-significant leading zeroes (ie. ones that do not correspond to sign) do not
+		// have an impact on the length of numList. Else 00900 would not be equal to 0900, even though
+		// it technically should be.
+		if(numY.size() == numList.size())
+		{
+			for(int i = 0; i < numList.size(); i++)
+			{
+				if(numList.get(i) != numY.get(i))
+				{
+					return false;
+				}
+			}
+		}
+		else
+		{
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * This method is needed in order to compare the values of two BigNumbers
+	 * @return the value of BigNumber as a linked list
+	 */
+	public LinkedList<Integer> toList()
+	{
+		return this.numList;
 	}
 
 	/**
-	 * @return the value stored in BigNumber as a String
+	 * @return the value of BigNumber as a String
 	 */
 	public String toString() 
 	{
