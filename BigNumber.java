@@ -27,8 +27,15 @@ public class BigNumber
 	 * 
 	 * @param x a String representing a decimal number
 	 */
-	public BigNumber(String x) 
+	public BigNumber(String x) throws InvalidFormatException
 	{
+		// Reject input that has non-numerical characters.
+		// (Excludes the first character, which can be a negative sign)
+		if(!x.matches("^[0-9\\-][0-9]*$"))
+		{
+			throw new InvalidFormatException("Input contains invalid characters.");
+		}
+		
 		this.numList = new LinkedList<>();
 		
 		// If the number is negative, we will need to remember this
@@ -41,8 +48,12 @@ public class BigNumber
 			x = x.substring(1);
 		}
 		
-		//TODO: Remove any leading zeroes from the user's input so they do not contribute to
+		// Remove any leading zeroes from the user's input so they do not contribute to
 		// errors in equals() and compareTo().
+		while(x.startsWith("0") && x.length() > 1)
+		{
+			x = x.substring(1);
+		}
 		
 		// Now we have a positive number in decimal form
 		// Each position n of the linked list represents 10^n
@@ -56,7 +67,8 @@ public class BigNumber
 		{
 			numList.addFirst(0);
 		}
-		else	// Insert a 9 to signify that this number is negative
+		// Insert a 9 to signify that this number is negative
+		else
 		{
 			numList.addFirst(9);
 		}
