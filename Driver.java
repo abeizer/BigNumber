@@ -7,7 +7,7 @@ public class Driver
 		BigNumber x = new BigNumber("2168211218041261");
 		System.out.println(x);
 		
-		BigNumber y = new BigNumber("-280");
+		BigNumber y = new BigNumber("-15689");
 		System.out.println(y);
 		
 		System.out.println(new BigNumber("-10"));
@@ -22,6 +22,12 @@ public class Driver
 		System.out.println(y.sign());
 		
 		System.out.println(new BigNumber("0900").equals(new BigNumber("900")));
+		
+		System.out.println(new BigNumber("900").compareTo(new BigNumber("500")));
+		System.out.println(new BigNumber("-900").compareTo(new BigNumber("-500")));
+		System.out.println(new BigNumber("-900").compareTo(new BigNumber("500")));
+		System.out.println(new BigNumber("100").compareTo(new BigNumber("-300")));
+		System.out.println(new BigNumber("100").compareTo(new BigNumber("100")));
 	}
 
 }

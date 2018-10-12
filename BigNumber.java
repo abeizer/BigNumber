@@ -51,16 +51,13 @@ public class BigNumber
 			numList.add(Character.getNumericValue(x.charAt(i)));
 		}
 		
-		// If the number was positive, insert a leading 0.
+		// Insert a leading zero to signify that this number is positive.
 		if(!isNegative)
-		{ 
+		{
 			numList.addFirst(0);
 		}
-		else	// If the number was negative, we have to negate the value in numList
+		else	// Insert a 9 to signify that this number is negative
 		{
-			negate();
-			// Then we need to make sure we know this value is negative by inserting 9
-			// as the highest order digit
 			numList.addFirst(9);
 		}
 		
@@ -204,11 +201,11 @@ public class BigNumber
 		int xLen = numList.size(), yLen = numY.size();
 		if(xSign != ySign) 
 		{
-			if(xSign > ySign) // sign of x is positive and sign of y is negative
+			if(xSign > ySign) 	// sign of x is positive and sign of y is negative
 			{
 				return 1;
 			}
-			else	// sign of y is positive and sign of x is negative
+			else				// sign of y is positive and sign of x is negative
 			{
 				return -1;
 			}
@@ -216,11 +213,11 @@ public class BigNumber
 		// The sign of each number is the same. We can try comparing the length of each number.
 		else if(xLen != yLen)	
 		{
-			if(xLen > yLen)	// this has more digits than y
+			if(xLen > yLen)	// x has more digits than y
 			{
 				return 1;
 			}
-			else	// y has more digits than x
+			else			// y has more digits than x
 			{
 				return -1;
 			}
@@ -228,10 +225,29 @@ public class BigNumber
 		// The sign AND length of each number is the same
 		else
 		{
-			//TODO: finish
-			// compare digit by digit. if the loop finishes, then they are equal. if the loop breaks early, compare the different digits to see which was larger
-			return -1;
-		}
+			// compare digit by digit, ignoring the sign digit.
+			// if the loop finishes, then they are equal. if the loop breaks early, compare the different digits to see which was larger
+			for(int i = 1; i < xLen; i++)
+			{
+				if(numList.get(i) > numY.get(i))		// x > y
+				{
+					if(xSign == 1)	//both positive
+					{
+						return 1;
+					}
+					return -1;		//both negative
+				}
+				else if(numList.get(i) < numY.get(i))	// y > x
+				{
+					if(xSign == 1)	//both positive
+					{
+						return -1;
+					}
+					return 1;		//both negative
+				}	
+			}
+			return 0;
+		}// end if
 	}
 
 	public int sign() 
