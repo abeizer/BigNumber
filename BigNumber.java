@@ -162,9 +162,16 @@ public class BigNumber
 			}
 			s.insert(0, "-");
 		}
-		else
+		else if(addition.get(0) == 0)
 		{
 			for(int k = 1; k < addition.size(); k++)
+			{
+				s.append(addition.get(k));
+			}
+		}
+		else
+		{
+			for(int k = 0; k < addition.size(); k++)
 			{
 				s.append(addition.get(k));
 			}
