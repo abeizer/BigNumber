@@ -70,6 +70,7 @@ public class BigNumber
 		// Insert a 9 to signify that this number is negative
 		else
 		{
+			negate();
 			numList.addFirst(9);
 		}
 		
