@@ -70,6 +70,7 @@ public class BigNumber
 		// Insert a 9 to signify that this number is negative
 		else
 		{
+			negate();
 			numList.addFirst(9);
 		}
 		
@@ -78,7 +79,7 @@ public class BigNumber
 	public BigNumber add(BigNumber y)
 	{
 		LinkedList<Integer> numY = y.toList();
-		LinkedList<Integer> addition = new LinkedList<>();
+		StringBuilder addition = new StringBuilder();
 		int index = (numList.size() <= numY.size() ? numList.size() : numY.size());
 		int carry = 0;
 		
@@ -96,9 +97,17 @@ public class BigNumber
 			{
 				carry = 0;
 			}
-			addition.add(temp);
+			addition.insert(0, temp);
 		}
 		
+		if(Character.getNumericValue(addition.charAt(0)) > 4)
+		{
+			addition.replace(0, 1, "-");
+		}
+		else
+		{
+			addition.delete(0, 1);
+		}
 		BigNumber result = new BigNumber();
 		
 		try 
@@ -211,23 +220,25 @@ public class BigNumber
 	{
 		StringBuilder s = new StringBuilder();
 		LinkedList<Integer> temp = numList;
+		boolean negated = false;
 		
 		//If value is negative, make sure to negate first and return with a "-" sign
 		if(numList.get(0) == 9)
 		{
 			negate();
 			s.append("-");
-
-			// Store the result of the negation so that we can use it, then
-			// negate numList again so that the contents of this object do not change
-			temp = numList;
-			negate();
+			negated = true;
 		}
 		
 		//Ignore the highest order integer, because it only represents the sign.
 		for(int i = 1; i < temp.size(); i++)
 		{
-			s.append(temp.get(i));
+			s.append(numList.get(i));
+		}
+		
+		if(negated)
+		{
+			negate();
 		}
 
 		return s.toString();

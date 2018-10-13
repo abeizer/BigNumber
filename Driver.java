@@ -45,7 +45,7 @@ public class Driver
 			System.out.println(new BigNumber("0900").equals(new BigNumber("900")));
 			System.out.println(new BigNumber("000").equals(new BigNumber("0")));
 			System.out.println(new BigNumber("0").equals(new BigNumber("0")));
-			System.out.println(new BigNumber("9100").equals(new BigNumber("0900")));
+			System.out.println(new BigNumber("-900").equals(new BigNumber("900")));
 			
 			System.out.println("\nCompareTo Test");
 			System.out.println(new BigNumber("900").compareTo(new BigNumber("500")));
@@ -57,6 +57,8 @@ public class Driver
 			
 			System.out.println("\nAdd Test");
 			System.out.println(new BigNumber("900").add(new BigNumber("-900")));
+			System.out.println(new BigNumber("500").add(new BigNumber("400")));
+			System.out.println(new BigNumber("-500").add(new BigNumber("400")));
 			
 		}
 		catch(InvalidFormatException ife)
