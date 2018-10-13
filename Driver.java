@@ -15,9 +15,9 @@ public class Driver
 		System.out.println(new BigNumber("008"));
 		System.out.println(new BigNumber("572907810201889570779716868736534556666999999999999"));
 		
-		System.out.println(new BigNumber("22-99999"));
+		//System.out.println(new BigNumber("22-99999"));
 		
-		System.out.println(new BigNumber("+9"));
+		//System.out.println(new BigNumber("+9"));
 
 		System.out.println("\nSign Test");
 		BigNumber x = new BigNumber("2168211218041261");
@@ -47,6 +47,10 @@ public class Driver
 		System.out.println(new BigNumber("900").add(new BigNumber("-900")));
 		System.out.println(new BigNumber("500").add(new BigNumber("400")));
 		System.out.println(new BigNumber("-500").add(new BigNumber("400")));
+		System.out.println(new BigNumber("6000").add(new BigNumber("100")));
+		System.out.println(new BigNumber("45812").add(new BigNumber("88")));
+		System.out.println(new BigNumber("88").add(new BigNumber("45812")));
+		System.out.println(new BigNumber("-56").add(new BigNumber("100")));
 
 	}
 }

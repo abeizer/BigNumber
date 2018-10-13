@@ -95,16 +95,45 @@ public class BigNumber
 		LinkedList<Integer> numY = y.toList();
 		StringBuilder addition = new StringBuilder();
 		int carry = 0;
+
+		int i = numList.size() - 1;		// keeps track of numList's index during the for loop
+		int j = numY.size() - 1;		// keeps track of numY's index during the for loop
+		int index = i > j ? i : j;		// we need to continue the loop until the larger list has been completed traversed
 		
-		// TODO: Make sure that if the numbers do not have the same number of digits, we fill the shorter one in
-		// with leading zeros. This way, we can be sure every index will be visited without impacting the addition.
-		int index = (numList.size() <= numY.size() ? numList.size() : numY.size());
 		
 		// Going from lowest order digit to highest
-		for(int i = index - 1; i >= 0; i--)
+		for(; index >= 0; index--, i--, j--)
 		{
-			// Add the two numbers. Record any carry.
-			int temp = numList.get(i) + numY.get(i) + carry;
+			int temp = 0;
+			try 
+			{
+				// Add the two numbers. Record any carry.
+				temp = numList.get(i) + numY.get(j) + carry;
+			}
+			catch(IndexOutOfBoundsException e)
+			{
+				// If this exception is thrown, we know that we have reached the end of one
+				// of the numbers. Rather than filling the missing positions with zeros, 
+				// which would require that we remove them after computation of the sum
+				// (in the case that numList was shorter)
+				// I instead catch this exception and handle it when it is thrown.
+				if(numList.size() < numY.size())
+				{
+					// If numList is shorter than the other value, then we know 
+					// it would be equivalent to adding 0 + numY[i] + carry
+					temp = numY.get(j) + carry;
+				}
+				else
+				{
+					// If numY is shorter, then the reverse is true. We are
+					// essentially adding 0 + numList[i] + carry
+					temp = numList.get(i) + carry;
+				}
+			}
+			
+			// After adding the numbers in the same position, we account for
+			// any number greater than 9 which would cause us to carry a 1
+			// to the next position's addition.
 			if(temp > 9)
 			{
 				carry = 1;
@@ -117,6 +146,11 @@ public class BigNumber
 			addition.insert(0, temp);
 		}
 		
+		// Before we convert our final result to a BigNumber, we need to make sure
+		// that we are passing a format that the constructor expects. In this case,
+		// the constructor wants a decimal number with a negative sign if applicable.
+		// Therefore, if the result is negative, we need to remove the sign digit and
+		// replace it with "-". If the number is positive, we simply remove the sign digit.
 		if(Character.getNumericValue(addition.charAt(0)) > 4)
 		{
 			addition.replace(0, 1, "-");
@@ -127,7 +161,6 @@ public class BigNumber
 		}
 		
 		return new BigNumber(addition.toString());
-
 	}
 
 	public BigNumber multiply(BigNumber y) 
