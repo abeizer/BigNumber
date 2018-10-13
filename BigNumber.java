@@ -269,25 +269,18 @@ public class BigNumber
 	{
 		StringBuilder s = new StringBuilder();
 		LinkedList<Integer> temp = numList;
-		boolean negated = false;
 		
 		//If value is negative, make sure to negate first and return with a "-" sign
 		if(numList.get(0) == 9)
 		{
-			negate();
+			temp = tensComplement();
 			s.append("-");
-			negated = true;
 		}
 		
 		//Ignore the highest order integer, because it only represents the sign.
 		for(int i = 1; i < temp.size(); i++)
 		{
-			s.append(numList.get(i));
-		}
-		
-		if(negated)
-		{
-			negate();
+			s.append(temp.get(i));
 		}
 
 		return s.toString();

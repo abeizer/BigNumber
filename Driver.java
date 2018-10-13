@@ -8,8 +8,10 @@ public class Driver
 		try {
 		
 			System.out.println("Constructor Test");
-			System.out.println(new BigNumber("-10"));
-			System.out.println(new BigNumber("10"));
+			BigNumber negTen = new BigNumber("-10");
+			System.out.println(negTen);
+			System.out.println(negTen);
+			System.out.println(new BigNumber("20"));
 			System.out.println(new BigNumber("0"));
 			System.out.println(new BigNumber("0000"));
 			System.out.println(new BigNumber("008"));
