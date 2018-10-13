@@ -79,7 +79,7 @@ public class BigNumber
 		// Insert a 9 to signify that this number is negative
 		else
 		{
-			numList = tensComplement();
+			numList = tensComplement(numList);
 			numList.addFirst(9);
 		}
 		
@@ -92,8 +92,9 @@ public class BigNumber
 	 */
 	public BigNumber add(BigNumber y)
 	{
+		LinkedList<Integer> addition = new LinkedList<>();
+		StringBuilder s = new StringBuilder();
 		LinkedList<Integer> numY = y.toList();
-		StringBuilder addition = new StringBuilder();
 		int carry = 0;
 
 		int i = numList.size() - 1;		// keeps track of numList's index during the for loop
@@ -143,24 +144,33 @@ public class BigNumber
 			{
 				carry = 0;
 			}
-			addition.insert(0, temp);
+			addition.addFirst(temp);
 		}
+		
 		
 		// Before we convert our final result to a BigNumber, we need to make sure
 		// that we are passing a format that the constructor expects. In this case,
 		// the constructor wants a decimal number with a negative sign if applicable.
-		// Therefore, if the result is negative, we need to remove the sign digit and
-		// replace it with "-". If the number is positive, we simply remove the sign digit.
-		if(Character.getNumericValue(addition.charAt(0)) > 4)
+		// Therefore, if the result is negative, we need to skip the sign digit and
+		// replace it with "-". If the number is positive, we simply skip the sign digit.
+		if(addition.get(0) > 4)
 		{
-			addition.replace(0, 1, "-");
+			addition = tensComplement(addition);
+			for(int k = 1; k < addition.size(); k++)
+			{
+				s.append(addition.get(k));
+			}
+			s.insert(0, "-");
 		}
 		else
 		{
-			addition.delete(0, 1);
+			for(int k = 1; k < addition.size(); k++)
+			{
+				s.append(addition.get(k));
+			}
 		}
 		
-		return new BigNumber(addition.toString());
+		return new BigNumber(s.toString());
 	}
 
 	public BigNumber multiply(BigNumber y) 
@@ -191,7 +201,7 @@ public class BigNumber
 	 */
 	public BigNumber negate() 
 	{
-		LinkedList<Integer> negation = tensComplement();
+		LinkedList<Integer> negation = tensComplement(numList);
 		StringBuilder s = new StringBuilder();
 		for(Integer item : negation)
 		{
@@ -205,14 +215,14 @@ public class BigNumber
 	 * Computes the tens complement of the BigNumber and returns it as a linked list.
 	 * @return The tens complement of the given number
 	 */
-	private LinkedList<Integer> tensComplement()
+	private LinkedList<Integer> tensComplement(LinkedList<Integer> num)
 	{
 		// Make a copy of numList
 		// This way, we are not changing the value of numList when we negate
 		// which will be useful in other methods that would otherwise require
 		// reversing this negation after performing operations.
 		LinkedList<Integer> temp = new LinkedList<>();
-		for(Integer item : numList)
+		for(Integer item : num)
 		{
 			temp.add(item);
 		}
@@ -294,7 +304,7 @@ public class BigNumber
 		//If value is negative, make sure to negate first and return with a "-" sign
 		if(numList.get(0) == 9)
 		{
-			temp = tensComplement();
+			temp = tensComplement(temp);
 			s.append("-");
 		}
 		
