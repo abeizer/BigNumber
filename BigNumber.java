@@ -86,8 +86,11 @@ public class BigNumber
 	{
 		LinkedList<Integer> numY = y.toList();
 		StringBuilder addition = new StringBuilder();
-		int index = (numList.size() <= numY.size() ? numList.size() : numY.size());
 		int carry = 0;
+		
+		// TODO: Make sure that if the numbers do not have the same number of digits, we fill the shorter one in
+		// with leading zeros. This way, we can be sure every index will be visited without impacting the addition.
+		int index = (numList.size() <= numY.size() ? numList.size() : numY.size());
 		
 		// Going from lowest order digit to highest
 		for(int i = index - 1; i >= 0; i--)
