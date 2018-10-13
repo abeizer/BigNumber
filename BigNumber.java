@@ -23,6 +23,7 @@ public class BigNumber
 	}
 
 	/**
+	 * @author Abby Beizer
 	 * Constructor that initializes BigNumber with a specific value in the form of Tens complement.
 	 * 
 	 * @param x a String representing a decimal number
@@ -76,6 +77,11 @@ public class BigNumber
 		
 	}
 
+	/**
+	 * @author Abby Beizer
+	 * @param y A value to add to this BigNumber
+	 * @return the result of the addition
+	 */
 	public BigNumber add(BigNumber y)
 	{
 		LinkedList<Integer> numY = y.toList();
@@ -144,7 +150,9 @@ public class BigNumber
 	}
 
 	/**
+	 * @author Abby Beizer
 	 * Negate the value stored in BigNumber
+	 * @return A BigNumber equivalent to the negated value
 	 */
 	public BigNumber negate() 
 	{
@@ -173,7 +181,7 @@ public class BigNumber
 	}
 
 	/**
-	 * 
+	 * @author Abby Beizer
 	 * @param y Another BigNumber to compare with
 	 * @return true if both BigNumbers are equal
 	 */
@@ -205,6 +213,7 @@ public class BigNumber
 	}
 	
 	/**
+	 * @author Abby Beizer
 	 * This method is needed in order to compare the values of two BigNumbers
 	 * @return the value of BigNumber as a linked list
 	 */
@@ -214,6 +223,7 @@ public class BigNumber
 	}
 
 	/**
+	 * @author Abby Beizer
 	 * @return the value of BigNumber as a String
 	 */
 	public String toString() 
@@ -245,6 +255,7 @@ public class BigNumber
 	}
 
 	/**
+	 * @author Abby Beizer
 	 * Compares the BigNumber value against another BigNumber value.
 	 * @param y A BigNumber to compare against
 	 * @return -1 if compared against a larger number, 0 if equal, or 1 if compared against a smaller number
@@ -307,6 +318,10 @@ public class BigNumber
 		}// end if
 	}
 
+	/**
+	 * @author Abby Beizer
+	 * @return Whether the number is positive (1) or negative (-1)
+	 */
 	public int sign() 
 	{
 		return (numList.get(0) < 5 ? 1 : -1);
