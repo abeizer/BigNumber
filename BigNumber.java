@@ -48,7 +48,7 @@ public class BigNumber
 		this.numList = new LinkedList<>();
 		
 		// If the number is negative, we will need to remember this
-		// and we must remove the negative sign so that we can parse the String into
+		// and we must remove the negative sign so that we can dump the String into
 		// our LinkedList.
 		boolean isNegative = false;
 		if(x.startsWith("-"))
