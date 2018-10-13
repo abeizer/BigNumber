@@ -79,7 +79,7 @@ public class BigNumber
 		// Insert a 9 to signify that this number is negative
 		else
 		{
-			negate();
+			numList = tensComplement();
 			numList.addFirst(9);
 		}
 		
@@ -170,7 +170,8 @@ public class BigNumber
 
 	public BigNumber subtract(BigNumber y) 
 	{
-		return this;
+		
+		return (add(y.negate()));
 	}
 
 	public BigNumber divide(BigNumber y) 
@@ -185,13 +186,19 @@ public class BigNumber
 
 	/**
 	 * @author Abby Beizer
-	 * Negate the value stored in BigNumber using tens complement. This alters the contents of the BigNumber object.
+	 * Negate the value stored in BigNumber using tens complement. This does not alter the contents of BigNumber.
 	 * @return A BigNumber equivalent to the negated value
 	 */
 	public BigNumber negate() 
 	{
-		numList = tensComplement();
-		return this;
+		LinkedList<Integer> negation = tensComplement();
+		StringBuilder s = new StringBuilder();
+		for(Integer item : negation)
+		{
+			s.append(item);
+		}
+		
+		return new BigNumber(s.toString());
 	}
 	
 	/**
