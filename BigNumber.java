@@ -121,14 +121,24 @@ public class BigNumber
 				if(numList.size() < numY.size())
 				{
 					// If numList is shorter than the other value, then we know 
-					// it would be equivalent to adding 0 + numY[i] + carry
+					// it would be equivalent to adding a fill value + numY[i] + carry.
+					// The fill value depends on whether numList is positive or negative:
+					// if negative, then the fill value would be 9, so we should add it.
 					temp = numY.get(j) + carry;
+					if(numList.get(0) > 4)
+					{
+						temp += 9;
+					}	
 				}
 				else
 				{
 					// If numY is shorter, then the reverse is true. We are
-					// essentially adding 0 + numList[i] + carry
+					// essentially adding fill + numList[i] + carry
 					temp = numList.get(i) + carry;
+					if(numY.get(0) > 4)
+					{
+						temp += 9;
+					}
 				}
 			}
 			
@@ -208,11 +218,28 @@ public class BigNumber
 	 */
 	public BigNumber negate() 
 	{
-		LinkedList<Integer> negation = tensComplement(numList);
+
 		StringBuilder s = new StringBuilder();
-		for(Integer item : negation)
+		
+		// If the number is positive, then the negated value is simply the positive
+		// value with a negative sign.
+		if(numList.get(0) == 0)
 		{
-			s.append(item);
+			s.append("-");
+			for(int i = 1; i < numList.size(); i++)
+			{
+				s.append(numList.get(i));
+			}
+		}
+		// If the value is negative, then we can find the tens complement and this will
+		// be the positive value.
+		else
+		{
+			LinkedList<Integer> temp = tensComplement(numList);
+			for(int i = 1; i < temp.size(); i++)
+			{
+				s.append(temp.get(i));
+			}
 		}
 		
 		return new BigNumber(s.toString());
