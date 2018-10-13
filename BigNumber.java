@@ -28,13 +28,21 @@ public class BigNumber
 	 * 
 	 * @param x a String representing a decimal number
 	 */
-	public BigNumber(String x) throws InvalidFormatException
+	public BigNumber(String x)
 	{
 		// Reject input that has non-numerical characters.
 		// (Excludes the first character, which can be a negative sign)
 		if(!x.matches("^[0-9\\-][0-9]*$"))
 		{
-			throw new InvalidFormatException("Input contains invalid characters.");
+			try 
+			{
+				throw new InvalidFormatException(x);
+			}
+			catch(InvalidFormatException e)
+			{
+				e.printStackTrace();
+			}
+			
 		}
 		
 		this.numList = new LinkedList<>();
@@ -117,18 +125,8 @@ public class BigNumber
 		{
 			addition.delete(0, 1);
 		}
-		BigNumber result = new BigNumber();
 		
-		try 
-		{	
-			result = new BigNumber(addition.toString());
-		}
-		catch(InvalidFormatException e)
-		{
-			System.out.println("Something went wrong in Add.");
-		}
-		
-		return result;
+		return new BigNumber(addition.toString());
 
 	}
 
