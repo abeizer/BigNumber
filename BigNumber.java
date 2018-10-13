@@ -151,7 +151,7 @@ public class BigNumber
 
 	/**
 	 * @author Abby Beizer
-	 * Negate the value stored in BigNumber
+	 * Negate the value stored in BigNumber. This alters the contents of the BigNumber object.
 	 * @return A BigNumber equivalent to the negated value
 	 */
 	public BigNumber negate() 
@@ -176,8 +176,47 @@ public class BigNumber
 				trailingZero = false;
 			}
 		}
-		
 		return this;
+	}
+	
+	/**
+	 * This method will serve as a private version of negate that does not alter the current BigNumber
+	 * and will return a linked list rather than another BigNumber object
+	 * @return The tens complement of the given number
+	 */
+	private LinkedList<Integer> tensComplement()
+	{
+		// Make a copy of numList
+		// This way, we are not changing the value of numList when we negate
+		// which will be useful in other methods that would otherwise require
+		// reversing this negation after performing operations.
+		LinkedList<Integer> temp = new LinkedList<>();
+		for(Integer item : numList)
+		{
+			temp.add(item);
+		}
+		
+		boolean trailingZero = true;	// Whether we are currently looking at a trailing 0
+		
+		for(int i = temp.size() - 1; i >= 0; i--)
+		{
+			// If we encounter a zero and it is a trailing zero, then we do nothing to it
+			// If it is not a trailing zero, then we must replace it with a 9.
+			if(temp.get(i) == 0)
+			{
+				if(!trailingZero)
+				{
+					temp.set(i, 9);
+				}
+			}
+			else
+			{
+				// If this is the first non-zero integer, then we subtract it from 10. If not, then subtract from 9.
+				temp.set(i, (trailingZero ? 10 : 9) - temp.get(i));
+				trailingZero = false;
+			}
+		}
+		return temp;
 	}
 
 	/**
