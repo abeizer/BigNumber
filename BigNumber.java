@@ -154,37 +154,17 @@ public class BigNumber
 
 	/**
 	 * @author Abby Beizer
-	 * Negate the value stored in BigNumber. This alters the contents of the BigNumber object.
+	 * Negate the value stored in BigNumber using tens complement. This alters the contents of the BigNumber object.
 	 * @return A BigNumber equivalent to the negated value
 	 */
 	public BigNumber negate() 
 	{
-		boolean trailingZero = true;	// Whether we are currently looking at a trailing 0
-		
-		for(int i = numList.size() - 1; i >= 0; i--)
-		{
-			// If we encounter a zero and it is a trailing zero, then we do nothing to it
-			// If it is not a trailing zero, then we must replace it with a 9.
-			if(numList.get(i) == 0)
-			{
-				if(!trailingZero)
-				{
-					numList.set(i, 9);
-				}
-			}
-			else
-			{
-				// If this is the first non-zero integer, then we subtract it from 10. If not, then subtract from 9.
-				numList.set(i, (trailingZero ? 10 : 9) - numList.get(i));
-				trailingZero = false;
-			}
-		}
+		numList = tensComplement();
 		return this;
 	}
 	
 	/**
-	 * This method will serve as a private version of negate that does not alter the current BigNumber
-	 * and will return a linked list rather than another BigNumber object
+	 * Computes the tens complement of the BigNumber and returns it as a linked list.
 	 * @return The tens complement of the given number
 	 */
 	private LinkedList<Integer> tensComplement()
@@ -232,9 +212,9 @@ public class BigNumber
 		LinkedList<Integer> numY = y.toList();
 		
 		// If the two numbers do not have the same number of digits, then they are not equal
-		// The constructor should trim any leading zeroes in the user's input so that 
+		// The constructor trims any leading zeroes in the user's input so that 
 		// non-significant leading zeroes (ie. ones that do not correspond to sign) do not
-		// have an impact on the length of numList. Else 00900 would not be equal to 0900, even though
+		// have an impact on the length of numList. Else 00900 would not be equal to 0900, but
 		// it technically should be.
 		if(numY.size() == numList.size())
 		{
