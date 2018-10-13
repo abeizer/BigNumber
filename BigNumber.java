@@ -77,7 +77,41 @@ public class BigNumber
 
 	public BigNumber add(BigNumber y)
 	{
-		return this;
+		LinkedList<Integer> numY = y.toList();
+		LinkedList<Integer> addition = new LinkedList<>();
+		int index = (numList.size() <= numY.size() ? numList.size() : numY.size());
+		int carry = 0;
+		
+		// Going from lowest order digit to highest
+		for(int i = index - 1; i >= 0; i--)
+		{
+			// Add the two numbers. Record any carry.
+			int temp = numList.get(i) + numY.get(i) + carry;
+			if(temp > 9)
+			{
+				carry = 1;
+				temp -= 10;
+			}
+			else
+			{
+				carry = 0;
+			}
+			addition.add(temp);
+		}
+		
+		BigNumber result = new BigNumber();
+		
+		try 
+		{	
+			result = new BigNumber(addition.toString());
+		}
+		catch(InvalidFormatException e)
+		{
+			System.out.println("Something went wrong in Add.");
+		}
+		
+		return result;
+
 	}
 
 	public BigNumber multiply(BigNumber y) 
