@@ -233,9 +233,35 @@ public class BigNumber
 		return (add(y.negate()));
 	}
 
-	public BigNumber divide(BigNumber y) 
-	{
-		return this;
+	/**
+	 * @author David Liotta
+	 * divides one BigNumber by another BigNumber
+	 * @param y
+	 * @return the quotient rounded up
+	 */
+	public BigNumber divide(BigNumber y) {
+		BigNumber quotient = new BigNumber("0");
+		BigNumber zero = new BigNumber("0");
+		BigNumber temp = this;
+		BigNumber div = y;
+		
+		if(temp.numList.get(0) != 0)
+			temp = temp.negate();
+		if(div.numList.get(0) != 0)
+			div = div.negate();
+		
+		while(temp.compareTo(zero) == 1) {
+			temp = temp.subtract(div);
+			quotient = quotient.add(new BigNumber("1"));
+		}
+		
+		//If both were negative, then the quotient is positive
+		if(this.numList.get(0) != 0 && y.numList.get(0) != 0)
+			return quotient;
+		//If only one was negative, return a negative quotient
+		if(this.numList.get(0) != 0 || y.numList.get(0) != 0)
+			return quotient.negate();
+		return quotient;
 	}
 
 	public BigNumber getMod(BigNumber y) // this is how he has it in the sample driver
