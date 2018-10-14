@@ -199,6 +199,7 @@ public class BigNumber
 	 * @param y
 	 * @return product
 	 */
+	//Found some bug when working with very large numbers, still under revision
 	public BigNumber multiply(BigNumber y) {
 		//Setting up some local variables
 		BigNumber product = new BigNumber("0");
