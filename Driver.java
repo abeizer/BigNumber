@@ -51,7 +51,7 @@ public class Driver
 		System.out.println(new BigNumber("45812").add(new BigNumber("88")));
 		System.out.println(new BigNumber("88").add(new BigNumber("45812")));
 		System.out.println(new BigNumber("100").add(new BigNumber("-56")));
-		System.out.println(new BigNumber("100000").add(new BigNumber("-56")));
+		System.out.println(new BigNumber("19450").add(new BigNumber("-100")));
 		
 		System.out.println("\nSubtract Test");
 		BigNumber i = new BigNumber("900");
