@@ -87,60 +87,44 @@ public class BigNumber
 
 	/**
 	 * @author Abby Beizer
-	 * @param y A value to add to this BigNumber
+	 * @param bn A value to add to this BigNumber
 	 * @return the result of the addition
 	 */
-	public BigNumber add(BigNumber y)
+	public BigNumber add(BigNumber bn)
 	{
 		LinkedList<Integer> addition = new LinkedList<>();
 		StringBuilder s = new StringBuilder();
-		LinkedList<Integer> numY = y.toList();
+		LinkedList<Integer> x = new LinkedList<>();
+		LinkedList<Integer> y = bn.toList();
 		int carry = 0;
-
-		int i = numList.size() - 1;		// keeps track of numList's index during the for loop
-		int j = numY.size() - 1;		// keeps track of numY's index during the for loop
-		int index = i > j ? i : j;		// we need to continue the loop until the larger list has been completed traversed
+		
+		// First we need to see whether the lists are the same length.
+		if(numList.size() == y.size())
+		{
+			// If the lists are already the same size, we need to add 
+			// a single fill number to both of them
+			x = fill(numList, 1);
+			y = fill(y, 1);
+		}
+		else if(y.size() >= numList.size())
+		{
+			x = fill(numList, y.size() - numList.size() + 1);
+			y = fill(y, 1);
+		}
+		else
+		{
+			y = fill(y, numList.size() - y.size() + 1);
+			x = fill(numList, 1);
+		}
 		
 		
 		// Going from lowest order digit to highest
-		for(; index >= 0; index--, i--, j--)
+		for(int i = x.size() - 1; i >= 0; i--)
 		{
 			int temp = 0;
-			try 
-			{
-				// Add the two numbers. Record any carry.
-				temp = numList.get(i) + numY.get(j) + carry;
-			}
-			catch(IndexOutOfBoundsException e)
-			{
-				// If this exception is thrown, we know that we have reached the end of one
-				// of the numbers. Rather than filling the missing positions with zeros, 
-				// which would require that we remove them after computation of the sum
-				// (in the case that numList was shorter)
-				// I instead catch this exception and handle it when it is thrown.
-				if(numList.size() < numY.size())
-				{
-					// If numList is shorter than the other value, then we know 
-					// it would be equivalent to adding a fill value + numY[i] + carry.
-					// The fill value depends on whether numList is positive or negative:
-					// if negative, then the fill value would be 9, so we should add it.
-					temp = numY.get(j) + carry;
-					if(numList.get(0) > 4)
-					{
-						temp += 9;
-					}	
-				}
-				else
-				{
-					// If numY is shorter, then the reverse is true. We are
-					// essentially adding fill + numList[i] + carry
-					temp = numList.get(i) + carry;
-					if(numY.get(0) > 4)
-					{
-						temp += 9;
-					}
-				}
-			}
+			
+			// Add the two numbers. Record any carry.
+			temp = x.get(i) + y.get(i) + carry;
 			
 			// After adding the numbers in the same position, we account for
 			// any number greater than 9 which would cause us to carry a 1
@@ -172,13 +156,6 @@ public class BigNumber
 			}
 			s.insert(0, "-");
 		}
-		else if(addition.get(0) == 0)
-		{
-			for(int k = 1; k < addition.size(); k++)
-			{
-				s.append(addition.get(k));
-			}
-		}
 		else
 		{
 			for(int k = 0; k < addition.size(); k++)
@@ -188,6 +165,30 @@ public class BigNumber
 		}
 		
 		return new BigNumber(s.toString());
+	}
+
+	/**
+	 * 
+	 * @param num
+	 * @param amount
+	 * @return
+	 */
+	private LinkedList<Integer> fill(LinkedList<Integer> num, int amount)
+	{
+		LinkedList<Integer> temp = new LinkedList<>();
+		for(Integer item : num)
+		{
+			temp.add(item);
+		}
+		
+		int fill = temp.get(0) < 5 ? 0 : 9;
+		
+		for(int i = 0; i < amount; i++)
+		{
+			temp.addFirst(fill);
+		}
+		
+		return temp;
 	}
 
 	public BigNumber multiply(BigNumber y) 
