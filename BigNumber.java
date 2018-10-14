@@ -191,9 +191,40 @@ public class BigNumber
 		return temp;
 	}
 
-	public BigNumber multiply(BigNumber y) 
-	{
-		return this;
+	/**
+	 * @author David Liotta
+	 * Parse through each number in this's numlist and multiply it to each number y's numList
+	 * Add that result to an ever growing product and when done, return the product
+	 * Also does some negation checking
+	 * @param y
+	 * @return product
+	 */
+	public BigNumber multiply(BigNumber y) {
+		//Setting up some local variables
+		BigNumber product = new BigNumber("0");
+		BigNumber in = new BigNumber(this.toString());
+		BigNumber param = new BigNumber(y.toString());
+		
+		//Checking for if either numbers were negative and making them positve
+		if(this.numList.get(0) != 0)
+			in = this.negate();
+		if(y.numList.get(0) != 0)
+			param = y.negate();
+		
+		for(int i = 0; i < y.numList.size() - 1; i++) {
+			for(int j = 0; j < in.numList.size() - 1; j++) {
+				double temp = ((param.numList.get(param.numList.size() - 1 - i)) * (Math.pow(10, i))) * ((in.numList.get(in.numList.size() - 1 - j)) * (Math.pow(10, j)));
+				BigNumber tempBR = new BigNumber(Integer.toString((int) temp));
+				product = product.add(tempBR);
+			}
+		}
+		//If both were negative, then negatives don't matter
+		if(this.numList.get(0) != 0 && y.numList.get(0) != 0)
+			return product;
+		//If only one was negative, return a negative product
+		if(this.numList.get(0) != 0 || y.numList.get(0) != 0)
+			return product.negate();
+		return product;
 	}
 
 	public BigNumber subtract(BigNumber y) 
