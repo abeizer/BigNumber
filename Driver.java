@@ -58,6 +58,10 @@ public class Driver
 		BigNumber j = new BigNumber("-900");
 		System.out.println(i.subtract(j));
 		System.out.println(j.subtract(i));
+		
+		System.out.println(new BigNumber("-1000").subtract(new BigNumber("-15000")));
+		System.out.println(new BigNumber("800").subtract(new BigNumber("-1234")));
+		System.out.println(new BigNumber("60").subtract(new BigNumber("70")));
 
 	}
 }
