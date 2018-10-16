@@ -13,11 +13,6 @@ public class Driver
 		System.out.println(new BigNumber("-900").equals(new BigNumber("900")));
 		
 		System.out.println("\nCompareTo Test");
-		System.out.println(new BigNumber("900").compareTo(new BigNumber("500")));
-		System.out.println(new BigNumber("-900").compareTo(new BigNumber("-500")));
-		System.out.println(new BigNumber("-900").compareTo(new BigNumber("500")));
-		System.out.println(new BigNumber("100").compareTo(new BigNumber("-300")));
-		System.out.println(new BigNumber("100").compareTo(new BigNumber("100")));
 		
 		
 		System.out.println("\nSubtract Test");

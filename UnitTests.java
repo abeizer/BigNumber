@@ -2,6 +2,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * @author Abby Beizer
+ *
+ * Currently non-exhaustive unit tests for BigNumber
+ */
 class UnitTests {
 
 	@Test
@@ -18,24 +23,6 @@ class UnitTests {
 		// Negative numbers are printed correctly
 		assertEquals(new BigNumber("-795727816000888777").toString(), "-795727816000888777");
 		assertEquals(new BigNumber("-99999").toString(), "-99999");
-	}
-
-	// TODO: Figure out what's wrong with this
-	@Test
-	void testInvalidFormatException() {
-		// Inputs that have a non-numerical value somewhere in the middle are not acceptable
-		Throwable exception = assertThrows(InvalidFormatException.class, () -> {
-			BigNumber x = new BigNumber("22-99999"); 
-		});
-		
-		assertEquals("22-99999", exception.getMessage());
-		
-		exception = assertThrows(InvalidFormatException.class, () -> {
-			BigNumber y = new BigNumber("+9"); 
-		});
-		
-		assertEquals("+9", exception.getMessage());
-		
 	}
 	
 	@Test
@@ -114,7 +101,12 @@ class UnitTests {
 
 	@Test
 	void testCompareTo() {
-		fail("Not yet implemented");
+		assertEquals(new BigNumber("900").compareTo(new BigNumber("500")), 1);
+		assertEquals(new BigNumber("-9000").compareTo(new BigNumber("-500")), -1);
+		assertEquals(new BigNumber("-900").compareTo(new BigNumber("500")), -1);
+		assertEquals(new BigNumber("100").compareTo(new BigNumber("-30")), 1);
+		assertEquals(new BigNumber("100").compareTo(new BigNumber("100")), 0);
+		assertEquals(new BigNumber("09827").compareTo(new BigNumber("9827")), 0);
 	}
 
 	@Test

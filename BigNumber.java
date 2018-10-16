@@ -437,12 +437,20 @@ public class BigNumber
 		// The sign of each number is the same. We can try comparing the length of each number.
 		else if(xLen != yLen)	
 		{
-			if(xLen > yLen)	// x has more digits than y
+			if(xLen > yLen)			// x has more digits than y
 			{
+				if(xSign == -1)		// a larger negative value = 'more negative' than the smaller
+				{
+					return -1;
+				}
 				return 1;
 			}
-			else			// y has more digits than x
+			else					// y has more digits than x
 			{
+				if(ySign == -1)		// a smaller negative value = 'less negative' than the larger
+				{
+					return 1;
+				}
 				return -1;
 			}
 		}
