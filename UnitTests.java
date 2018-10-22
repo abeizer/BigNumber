@@ -152,5 +152,31 @@ class UnitTests {
 		assertEquals(k.multiply(l), new BigNumber("4267530825363"));	
 		assertEquals(o.multiply(p), new BigNumber("892713045458083407347197975152748484254791912835209958490385922990")); 
 	}
+	
+	@Test
+	void testDivide() {
+		BigNumber k = new BigNumber("34567");
+		BigNumber l = new BigNumber("123456789");
+		BigNumber m = new BigNumber("-53859");
+		BigNumber n = new BigNumber("24680135790987654321");
+		BigNumber p = new BigNumber("-98765");
+		
+		assertEquals(l.divide(k), new BigNumber("3571"));	//Should return 3571
+		assertEquals(p.divide(m), new BigNumber("1"));
+		assertEquals(l.divide(p), new BigNumber("-1250"));
+		assertEquals(n.divide(k), new BigNumber("713979685566802"));
+		
+	}
+	
+	@Test
+	void testMod() {
+		BigNumber i = new BigNumber("900");
+		BigNumber k = new BigNumber("34567");
+		BigNumber l = new BigNumber("123456789");
+		BigNumber n = new BigNumber("24680135790987654321");
+		
+		assertEquals(i.getMod(k), 900);
+		assertEquals(n.getMod(l), 21336507);
+	}
 
 }
