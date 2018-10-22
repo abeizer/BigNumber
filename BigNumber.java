@@ -191,42 +191,59 @@ public class BigNumber
 		return temp;
 	}
 
-	/**
+		/**
 	 * @author David Liotta
 	 * Parse through each number in this's numlist and multiply it to each number y's numList
 	 * Add that result to an ever growing product and when done, return the product
 	 * Also does some negation checking
-	 * @param y
+	 * @param y : the number being multiplied to this
 	 * @return product
-	 */
-	//Found some bugs when working with very large numbers, still under revision
+	 */	
 	public BigNumber multiply(BigNumber y) {
-		//Setting up some local variables
+		//Setting up some local variables as to not change the real values of this and 
 		BigNumber product = new BigNumber("0");
-		BigNumber in = new BigNumber(this.toString());
-		BigNumber param = new BigNumber(y.toString());
+		BigNumber in = this;
+		BigNumber param = y;
 		
-		//Checking for if either numbers were negative and making them positve
-		if(this.numList.get(0) != 0)
-			in = this.negate();
-		if(y.numList.get(0) != 0)
-			param = y.negate();
+		//Checking for if either numbers were negative and making them positive
+		if(in.numList.get(0) != 0)
+			in = in.negate();
+		if(param.numList.get(0) != 0)
+			param = param.negate();
 		
-		for(int i = 0; i < y.numList.size() - 1; i++) {
-			for(int j = 0; j < in.numList.size() - 1; j++) {
-				double temp = ((param.numList.get(param.numList.size() - 1 - i)) * (Math.pow(10, i))) * ((in.numList.get(in.numList.size() - 1 - j)) * (Math.pow(10, j)));
-				BigNumber tempBR = new BigNumber(Integer.toString((int) temp));
-				product = product.add(tempBR);
+		//keeping count since we loop through the list from top to bottom
+		int jc = 0;	
+		int ic = 0;
+		// We want to loop through each number in the both arrays from the lowest digit to highest 
+		// and multiply each to each other. Then add that result to the product
+		for(int i = in.numList.size() - 1; i > 0; i--) {
+			for(int j = param.numList.size() - 1; j > 0; j--) {
+				//Weed out any values that will just be 0 and skip to next pair
+				if(in.numList.get(i) != 0 && param.numList.get(j) != 0) {
+					int tNum = in.numList.get(i) * param.numList.get(j);
+					//Adds zeros to the end of the number to account for magnitude
+					String zeros = "";
+					for(int k = 0; k < jc + ic;k++)
+						zeros = zeros +  "0";
+					String temp = tNum + zeros;
+					BigNumber tempBN = new BigNumber(temp);
+					product = product.add(tempBN);
+				}
+				jc++;
 			}
+			jc = 0;
+			ic++;
 		}
-		//If both were negative, then negatives don't matter
-		if(this.numList.get(0) != 0 && y.numList.get(0) != 0)
-			return product;
-		//If only one was negative, return a negative product
-		if(this.numList.get(0) != 0 || y.numList.get(0) != 0)
+		
+		//If only one was negative and the other is not, return a negative product
+		if(this.numList.get(0) == 0 && y.numList.get(0) != 0)
 			return product.negate();
+		if(this.numList.get(0) != 0 && y.numList.get(0) == 0)
+			return product.negate();
+		
 		return product;
 	}
+
 
 	public BigNumber subtract(BigNumber y) 
 	{
