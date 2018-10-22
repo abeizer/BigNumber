@@ -263,7 +263,6 @@ public class BigNumber
 		BigNumber div = y;
 		
 		//These will cut down on time later by a lot
-		BigNumber zero = new BigNumber("0"); 
 		BigNumber one = new BigNumber("1"); 
 		BigNumber onek = new BigNumber("1000");
 		BigNumber onemil = new BigNumber("1000000");
