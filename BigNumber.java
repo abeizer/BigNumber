@@ -251,34 +251,62 @@ public class BigNumber
 		return (add(y.negate()));
 	}
 
-	/**
+		/**
 	 * @author David Liotta
 	 * divides one BigNumber by another BigNumber
-	 * @param y
-	 * @return the quotient rounded up
+	 * @param y : the divisor that is dividing this
+	 * @return the quotient rounded down
 	 */
 	public BigNumber divide(BigNumber y) {
 		BigNumber quotient = new BigNumber("0");
-		BigNumber zero = new BigNumber("0");
-		BigNumber temp = this;
+		BigNumber rem = this;
 		BigNumber div = y;
 		
-		if(temp.numList.get(0) != 0)
-			temp = temp.negate();
+		//These will cut down on time later by a lot
+		BigNumber zero = new BigNumber("0"); 
+		BigNumber one = new BigNumber("1"); 
+		BigNumber onek = new BigNumber("1000");
+		BigNumber onemil = new BigNumber("1000000");
+		BigNumber onebil = new BigNumber("1000000000");
+		BigNumber onetril = new BigNumber("1000000000000");
+		BigNumber onequat = new BigNumber("1000000000000000");
+		
+		//If they are negative, make positive to make operations easier
+		if(rem.numList.get(0) != 0)
+			rem = rem.negate();
 		if(div.numList.get(0) != 0)
 			div = div.negate();
 		
-		while(temp.compareTo(zero) == 1) {
-			temp = temp.subtract(div);
-			quotient = quotient.add(new BigNumber("1"));
+		//While checking to make sure the remainder is still larger than the divisor
+		//Subtract the remainder by the divisor times the appropriate magnitude
+		while(rem.compareTo(div) == 1) {
+			if(rem.numList.size() > div.numList.size() + 15) {
+				rem = rem.subtract(div.multiply(onequat));
+				quotient = quotient.add(onequat);
+			}else if(rem.numList.size() > div.numList.size() + 12) {
+				rem = rem.subtract(div.multiply(onetril));
+				quotient = quotient.add(onetril);
+			}else if(rem.numList.size() > div.numList.size() + 9) {
+				rem = rem.subtract(div.multiply(onebil));
+				quotient = quotient.add(onebil);
+			}else if(rem.numList.size() > div.numList.size() + 6) {
+				rem = rem.subtract(div.multiply(onemil));
+				quotient = quotient.add(onemil);
+			}else if(rem.numList.size() > div.numList.size() + 3) {
+				rem = rem.subtract(div.multiply(onek));
+				quotient = quotient.add(onek);
+			}else{
+				rem = rem.subtract(div);
+				quotient = quotient.add(one);
+			}
 		}
 		
-		//If both were negative, then the quotient is positive
-		if(this.numList.get(0) != 0 && y.numList.get(0) != 0)
-			return quotient;
-		//If only one was negative, return a negative quotient
-		if(this.numList.get(0) != 0 || y.numList.get(0) != 0)
+		//If only one was negative and the other is not, return a negative quotient
+		if(this.numList.get(0) == 0 && y.numList.get(0) != 0)
 			return quotient.negate();
+		if(this.numList.get(0) != 0 && y.numList.get(0) == 0)
+			return quotient.negate();
+		
 		return quotient;
 	}
 
