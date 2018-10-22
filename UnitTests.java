@@ -135,5 +135,22 @@ class UnitTests {
 		assertEquals(y.sign(), -1);
 		
 	}
+	
+	@Test
+	void testMultiply() {
+		//The multiply function multiplies two numbers together
+		BigNumber i = new BigNumber("900");
+		BigNumber k = new BigNumber("34567");
+		BigNumber l = new BigNumber("123456789");
+		BigNumber m = new BigNumber("-53859");
+		BigNumber n = new BigNumber("24680135790987654321");
+		BigNumber o = new BigNumber("-9038759129834287524398298740978570184324324536376347476235366");
+		BigNumber p = new BigNumber("-98765");
+		assertEquals(i.multiply(k), new BigNumber("31110300"));  
+		assertEquals(m.multiply(k), new BigNumber("-1861744053"));
+		assertEquals(m.multiply(p), new BigNumber("5319384135"));
+		assertEquals(k.multiply(l), new BigNumber("4267530825363"));	
+		assertEquals(o.multiply(p), new BigNumber("892713045458083407347197975152748484254791912835209958490385922990")); 
+	}
 
 }
