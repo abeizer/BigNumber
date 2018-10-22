@@ -309,9 +309,41 @@ public class BigNumber
 		return quotient;
 	}
 
-	public BigNumber getMod(BigNumber y) // this is how he has it in the sample driver
-	{
-		return this;
+	/**
+	 * @author David Liotta
+	 * @param y : the modulus operator operation on this
+	 * @return the remainder
+	 * We can assume all input into this function
+	 * mod and division do basically the same thing except mod returns the remainder instead of quotient
+	 */
+	public BigNumber getMod(BigNumber y){
+		BigNumber rem = this;
+		BigNumber div = y;
+		
+		//These will cut down on time later by a lot
+		BigNumber onek = new BigNumber("1000");
+		BigNumber onemil = new BigNumber("1000000");
+		BigNumber onebil = new BigNumber("1000000000");
+		BigNumber onetril = new BigNumber("1000000000000");
+		BigNumber onequat = new BigNumber("1000000000000000");
+		
+		//While checking to make sure the remainder is still larger than the divisor
+		//Subtract the remainder by the divisor times the appropriate magnitude
+		while(rem.compareTo(div) == 1) {
+			if(rem.numList.size() > div.numList.size() + 15) 
+				rem = rem.subtract(div.multiply(onequat));
+			else if(rem.numList.size() > div.numList.size() + 12) 
+				rem = rem.subtract(div.multiply(onetril));
+			else if(rem.numList.size() > div.numList.size() + 9) 
+				rem = rem.subtract(div.multiply(onebil));
+			else if(rem.numList.size() > div.numList.size() + 6) 
+				rem = rem.subtract(div.multiply(onemil));
+			else if(rem.numList.size() > div.numList.size() + 3) 
+				rem = rem.subtract(div.multiply(onek));
+			else
+				rem = rem.subtract(div);
+		}
+		return rem;
 	}
 
 	/**
