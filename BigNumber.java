@@ -329,7 +329,7 @@ public class BigNumber
 		
 		//While checking to make sure the remainder is still larger than the divisor
 		//Subtract the remainder by the divisor times the appropriate magnitude
-		while(rem.compareTo(div) == 1) {
+		while(rem.compareTo(div) == 1 || rem.compareTo(div) == 0) {
 			if(rem.numList.size() > div.numList.size() + 15) 
 				rem = rem.subtract(div.multiply(onequat));
 			else if(rem.numList.size() > div.numList.size() + 12) 
