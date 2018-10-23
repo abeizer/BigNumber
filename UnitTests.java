@@ -175,16 +175,14 @@ class UnitTests {
 		BigNumber n = new BigNumber("24680135790987654321");
 		BigNumber o = new BigNumber("-9038759129834287524398298740978570184324324536376347476235366");
 		BigNumber p = new BigNumber("-98765");
-		assertEquals(i.multiply(k), new BigNumber("31110300"));  
-		assertEquals(m.multiply(k), new BigNumber("-1861744053"));
-		assertEquals(m.multiply(p), new BigNumber("5319384135"));
-		assertEquals(k.multiply(l), new BigNumber("4267530825363"));	
-		assertEquals(o.multiply(p), new BigNumber("892713045458083407347197975152748484254791912835209958490385922990")); 
+		
+		assertEquals(i.multiply(k).toString(), "31110300");  
+		assertEquals(m.multiply(k).toString(), "-1861744053");
+		assertEquals(m.multiply(p).toString(), "5319384135");
+		assertEquals(k.multiply(l).toString(), "4267530825363");	
+		assertEquals(o.multiply(p).toString(), "892713045458083407347197975152748484254791912835209958490385922990"); 
 	}
 	
-	/**
-	 * @author David Liotta
-	 */
 	@Test
 	void testDivide() {
 		BigNumber k = new BigNumber("34567");
@@ -193,16 +191,13 @@ class UnitTests {
 		BigNumber n = new BigNumber("24680135790987654321");
 		BigNumber p = new BigNumber("-98765");
 		
-		assertEquals(l.divide(k), new BigNumber("3571"));	//Should return 3571
-		assertEquals(p.divide(m), new BigNumber("1"));
-		assertEquals(l.divide(p), new BigNumber("-1250"));
-		assertEquals(n.divide(k), new BigNumber("713979685566802"));
+		assertEquals(l.divide(k).toString(), "3571");
+		assertEquals(p.divide(m).toString(), "1");
+		assertEquals(l.divide(p).toString(), "-1250");
+		assertEquals(n.divide(k).toString(), "713979685566802");
 		
 	}
 	
-	/**
-	 * @author David Liotta
-	 */
 	@Test
 	void testMod() {
 		BigNumber i = new BigNumber("900");
@@ -210,8 +205,8 @@ class UnitTests {
 		BigNumber l = new BigNumber("123456789");
 		BigNumber n = new BigNumber("24680135790987654321");
 		
-		assertEquals(i.getMod(k), 900);
-		assertEquals(n.getMod(l), 21336507);
+		assertEquals(i.getMod(k).toString(), "900");
+		assertEquals(n.getMod(l).toString(), "21336507");
 	}
 
 }
