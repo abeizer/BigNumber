@@ -571,9 +571,89 @@ public class BigNumber
 	}
 	
 
-	public BigNumber[] factor() 
-	{
-		return (new BigNumber[2]);
+		/**
+	 * @author David Liotta
+	 * @param y
+	 * @return the greatest common denominator of the two numbers
+	 */
+	public BigNumber gcd(BigNumber y) {
+		BigNumber rem;
+		BigNumber a = this;
+	    while (!y.equals(new BigNumber("0"))){
+	        rem = a.getMod(y);
+	        a = y;
+	        y = rem;
+	    }
+	    return a;
 	}
+
+	//This version of factor does not work but it is supposedly faster due to the algorithm used
+	/**
+	 * @author David Liotta
+	 * @return a list of the factors of the number
+	 * @throws InvalidFormatException
+	 * This method uses the Pollard rho algorithm to find the denominators
+	 */
+	public BigNumber factor() {
+		BigNumber x = new BigNumber("2");
+		BigNumber y = new BigNumber("2");
+		BigNumber f = new BigNumber("1");
+		BigNumber j;
+		int s = 2;
+		
+		while(f.equals(new BigNumber("1"))) {
+			
+			for(int c = 1; (c <= s) && (f.compareTo(new BigNumber("1")) <= 1); c++) {
+				x = (x.multiply(x)).add(new BigNumber("1")).getMod(this);
+				j = x.subtract(y);
+				if(j.numList.get(0) != 0)
+					j = j.negate();
+				f = j.gcd(this);
+				System.out.println("count = "+ c + " x = " + x + " factor = " + f);
+			}
+			s = 2 * s;
+			y = x;			
+		}
+		if(f.equals(this))
+				return new BigNumber("0");
+		return f;
+	}
+	
+	//This version of factor works but is slow
+	/*
+	public LinkedList factor() throws InvalidFormatException {
+		LinkedList<BigNumber> factors = new LinkedList<BigNumber>();
+		BigNumber zero = new BigNumber ("0");
+		BigNumber two = new BigNumber("2");
+		BigNumber y = this;
+		
+		//Turn any negative numbers into a positive since it doesn't matter for factors
+		if(y.numList.get(0) != 0)
+			y = y.negate();
+				
+		//error handling
+		if(y.compareTo(two) < 0)
+			throw new InvalidFormatException("The number must be greater than one");
+		
+		//If the number is divisible by 2, divide it until it can't be anymore
+		while(y.getMod(two).equals(zero)) {
+			factors.add(two);
+			y = y.divide(two);
+		}		
+		//making sure the number is larger than 1
+		 if (y.compareTo(new BigNumber("1")) > 0){
+		        BigNumber tr = new BigNumber("3");
+		        while (tr.multiply(tr).compareTo(y) <= 0){
+		            if (y.getMod(tr).equals(zero)){
+		                factors.add(tr);
+		                y = y.divide(tr);
+		            }else
+		                tr = tr.add(two);
+		        }
+		        factors.add(y);
+		    }
+		return factors;
+	}
+	*/
 
 }
