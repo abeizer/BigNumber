@@ -14,7 +14,6 @@ Division of methods:
     negate<br/>
     toString<br/>
     compareTo<br/>
-    factor<br/>
     sign<br/>
     equals<br/>
 
