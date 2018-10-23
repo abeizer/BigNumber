@@ -2,13 +2,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-/**
- * @author Abby Beizer
- *
- * Currently non-exhaustive unit tests for BigNumber
- */
+
 class UnitTests {
 
+	/**
+	 * @author Abby Beizer
+	 */
 	@Test
 	void testToString() {
 		
@@ -25,6 +24,9 @@ class UnitTests {
 		assertEquals(new BigNumber("-99999").toString(), "-99999");
 	}
 	
+	/**
+	 * @author Abby Beizer
+	 */
 	@Test
 	void testAdd() {
 		
@@ -49,6 +51,9 @@ class UnitTests {
 		assertEquals(new BigNumber("19450").add(new BigNumber("-100")).toString(), "19350");
 	}
 
+	/**
+	 * @author Abby Beizer
+	 */
 	@Test
 	void testSubtract() {
 		
@@ -72,6 +77,9 @@ class UnitTests {
 
 	}
 
+	/**
+	 * @author Abby Beizer
+	 */
 	@Test
 	void testNegate() {
 		// A positive number negated = the negative value of that number
@@ -85,6 +93,9 @@ class UnitTests {
 		assertEquals(new BigNumber("-999999").negate().toString(), "999999");
 	}
 
+	/**
+	 * @author Abby Beizer
+	 */
 	@Test
 	void testEquals() {
 		// Leading zeroes in input are not counted as significant digits
@@ -99,6 +110,9 @@ class UnitTests {
 		assertFalse(new BigNumber("-5142").equals(new BigNumber("-194951")));
 	}
 
+	/**
+	 * @author Abby Beizer
+	 */
 	@Test
 	void testCompareTo() {
 		assertEquals(new BigNumber("900").compareTo(new BigNumber("500")), 1);
@@ -109,18 +123,30 @@ class UnitTests {
 		assertEquals(new BigNumber("09827").compareTo(new BigNumber("9827")), 0);
 	}
 
+	/**
+	 * @author Abby Beizer
+	 */
 	@Test
 	void testSign() {
 		// Negative numbers return a negative sign (-1)
 		assertEquals(new BigNumber("-10").sign(), -1);
 		assertEquals(new BigNumber("-50928092840881").sign(), -1);
+		assertEquals(new BigNumber("-9").sign(), -1);
 		
 		// Positive numbers return a positive sign (1)
 		assertEquals(new BigNumber("10").sign(), 1);
 		assertEquals(new BigNumber("992871761654054987409").sign(), 1);
 		assertEquals(new BigNumber("2168211218041261").sign(), 1);
+		assertEquals(new BigNumber("1").sign(), 1);
+		
+		// Zero returns 0
+		assertEquals(new BigNumber("0").sign(), 0);
+		assertEquals(new BigNumber("00000").sign(), 0);
 	}
 	
+	/**
+	 * @author Abby Beizer
+	 */
 	@Test
 	void testSignImmutable() {
 		// The sign function does not change the contents of the BigNumber
@@ -136,6 +162,9 @@ class UnitTests {
 		
 	}
 	
+	/**
+	 * @author David Liotta
+	 */
 	@Test
 	void testMultiply() {
 		//The multiply function multiplies two numbers together
@@ -153,6 +182,9 @@ class UnitTests {
 		assertEquals(o.multiply(p), new BigNumber("892713045458083407347197975152748484254791912835209958490385922990")); 
 	}
 	
+	/**
+	 * @author David Liotta
+	 */
 	@Test
 	void testDivide() {
 		BigNumber k = new BigNumber("34567");
@@ -168,6 +200,9 @@ class UnitTests {
 		
 	}
 	
+	/**
+	 * @author David Liotta
+	 */
 	@Test
 	void testMod() {
 		BigNumber i = new BigNumber("900");

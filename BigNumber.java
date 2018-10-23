@@ -168,10 +168,12 @@ public class BigNumber
 	}
 
 	/**
-	 * 
-	 * @param num
-	 * @param amount
-	 * @return
+	 * @author Abby Beizer
+	 * This method is used to fill a list with dummy values for the purpose of addition, so that both lists involved in the addition are the same length.
+	 * If the number is negative, then the list is filled with leading 9's. If the number is positive or zero, the list is filled with leading 0's.
+	 * @param num The linked list that needs to be filled
+	 * @param amount The number of digits that need to be added to the list
+	 * @return A new list that contains the value of num, filled with an amount of leading digits
 	 */
 	private LinkedList<Integer> fill(LinkedList<Integer> num, int amount)
 	{
@@ -191,7 +193,7 @@ public class BigNumber
 		return temp;
 	}
 
-		/**
+	/**
 	 * @author David Liotta
 	 * Parse through each number in this's numlist and multiply it to each number y's numList
 	 * Add that result to an ever growing product and when done, return the product
@@ -245,13 +247,18 @@ public class BigNumber
 	}
 
 
+	/**
+	 * @author Abby Beizer
+	 * Subtraction with tens complement is the same as adding the negated value.
+	 * @param y A BigNumber to subtract from numList
+	 * @return the result of numList minus y.
+	 */
 	public BigNumber subtract(BigNumber y) 
-	{
-		
+	{	
 		return (add(y.negate()));
 	}
 
-		/**
+	/**
 	 * @author David Liotta
 	 * divides one BigNumber by another BigNumber
 	 * @param y : the divisor that is dividing this
@@ -381,6 +388,7 @@ public class BigNumber
 	}
 	
 	/**
+	 * @author Abby Beizer
 	 * Computes the tens complement of the BigNumber and returns it as a linked list.
 	 * @return The tens complement of the given number
 	 */
@@ -421,7 +429,7 @@ public class BigNumber
 
 	/**
 	 * @author Abby Beizer
-	 * @param y Another BigNumber to compare with
+	 * @param y Another BigNumber to compare against for equality
 	 * @return true if both BigNumbers are equal
 	 */
 	public boolean equals(BigNumber y) 
@@ -560,18 +568,25 @@ public class BigNumber
 
 	/**
 	 * @author Abby Beizer
-	 * @return Whether the number is positive (1) or negative (-1)
+	 * @return Whether the number is positive (1), negative (-1), or zero (0)
 	 */
 	public int sign() 
 	{
+		if(numList.size() == 2 && numList.get(1) == 0)
+		{
+			return 0;
+		}
 		return (numList.get(0) < 5 ? 1 : -1);
 	}
 
+	/**
+	 * @author David Liotta
+	 */
 	public void normalize() {
 	}
 	
 
-		/**
+	/**
 	 * @author David Liotta
 	 * @param y
 	 * @return the greatest common denominator of the two numbers
