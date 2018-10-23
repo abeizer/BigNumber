@@ -575,6 +575,12 @@ public class BigNumber
 	    return a;
 	}
 
+	
+	//Helper method for factor()
+	private BigNumber g(BigNumber x) {
+		return (x.multiply(x)).subtract(new BigNumber("1")).getMod(this);
+	}
+
 	//This version of factor does not work but it is supposedly faster due to the algorithm used
 	/**
 	 * @author David Liotta
@@ -582,25 +588,16 @@ public class BigNumber
 	 * @throws InvalidFormatException
 	 * This method uses the Pollard rho algorithm to find the denominators
 	 */
+	
 	public BigNumber factor() {
 		BigNumber x = new BigNumber("2");
 		BigNumber y = new BigNumber("2");
 		BigNumber f = new BigNumber("1");
-		BigNumber j;
-		int s = 2;
 		
 		while(f.equals(new BigNumber("1"))) {
-			
-			for(int c = 1; (c <= s) && (f.compareTo(new BigNumber("1")) <= 1); c++) {
-				x = (x.multiply(x)).add(new BigNumber("1")).getMod(this);
-				j = x.subtract(y);
-				if(j.numList.get(0) != 0)
-					j = j.negate();
-				f = j.gcd(this);
-				System.out.println("count = "+ c + " x = " + x + " factor = " + f);
-			}
-			s = 2 * s;
-			y = x;			
+			x = this.g(x);
+			y = this.g(this.g(y));
+			f = x.subtract(y).gcd(this);	
 		}
 		if(f.equals(this))
 				return new BigNumber("0");
