@@ -269,14 +269,6 @@ public class BigNumber
 		BigNumber rem = this;
 		BigNumber div = y;
 		
-		//These will cut down on time later by a lot
-		BigNumber one = new BigNumber("1"); 
-		BigNumber onek = new BigNumber("1000");
-		BigNumber onemil = new BigNumber("1000000");
-		BigNumber onebil = new BigNumber("1000000000");
-		BigNumber onetril = new BigNumber("1000000000000");
-		BigNumber onequat = new BigNumber("1000000000000000");
-		
 		//If they are negative, make positive to make operations easier
 		if(rem.numList.get(0) != 0)
 			rem = rem.negate();
@@ -286,25 +278,13 @@ public class BigNumber
 		//While checking to make sure the remainder is still larger than the divisor
 		//Subtract the remainder by the divisor times the appropriate magnitude
 		while(rem.compareTo(div) >= 0) {
-			if(rem.numList.size() > div.numList.size() + 15) {
-				rem = rem.subtract(div.multiply(onequat));
-				quotient = quotient.add(onequat);
-			}else if(rem.numList.size() > div.numList.size() + 12) {
-				rem = rem.subtract(div.multiply(onetril));
-				quotient = quotient.add(onetril);
-			}else if(rem.numList.size() > div.numList.size() + 9) {
-				rem = rem.subtract(div.multiply(onebil));
-				quotient = quotient.add(onebil);
-			}else if(rem.numList.size() > div.numList.size() + 6) {
-				rem = rem.subtract(div.multiply(onemil));
-				quotient = quotient.add(onemil);
-			}else if(rem.numList.size() > div.numList.size() + 3) {
-				rem = rem.subtract(div.multiply(onek));
-				quotient = quotient.add(onek);
-			}else{
-				rem = rem.subtract(div);
-				quotient = quotient.add(one);
-			}
+			String zeros = "";
+			for(int k = 0; k < rem.numList.size() - div.numList.size() - 1; k++)
+				zeros = zeros +  "0";
+			String temp = 1 + zeros;
+			BigNumber tempBN = new BigNumber(temp);
+			rem = rem.subtract(div.multiply(tempBN));
+			quotient = quotient.add(tempBN);
 		}
 		
 		//If only one was negative and the other is not, return a negative quotient
@@ -327,30 +307,23 @@ public class BigNumber
 		BigNumber rem = this;
 		BigNumber div = y;
 		
-		//These will cut down on time later by a lot
-		BigNumber onek = new BigNumber("1000");
-		BigNumber onemil = new BigNumber("1000000");
-		BigNumber onebil = new BigNumber("1000000000");
-		BigNumber onetril = new BigNumber("1000000000000");
-		BigNumber onequat = new BigNumber("1000000000000000");
-		
 		//While checking to make sure the remainder is still larger than the divisor
 		//Subtract the remainder by the divisor times the appropriate magnitude
 		while(rem.compareTo(div) >= 0) {
-			if(rem.numList.size() > div.numList.size() + 15) 
-				rem = rem.subtract(div.multiply(onequat));
-			else if(rem.numList.size() > div.numList.size() + 12) 
-				rem = rem.subtract(div.multiply(onetril));
-			else if(rem.numList.size() > div.numList.size() + 9) 
-				rem = rem.subtract(div.multiply(onebil));
-			else if(rem.numList.size() > div.numList.size() + 6) 
-				rem = rem.subtract(div.multiply(onemil));
-			else if(rem.numList.size() > div.numList.size() + 3) 
-				rem = rem.subtract(div.multiply(onek));
-			else
-				rem = rem.subtract(div);
+			String zeros = "";
+			for(int k = 0; k < rem.numList.size() - div.numList.size() - 1; k++)
+				zeros = zeros +  "0";
+			String temp = 1 + zeros;
+			BigNumber tempBN = new BigNumber(temp);
+			rem = rem.subtract(div.multiply(tempBN));
 		}
 		return rem;
+	}
+	
+	public BigNumber subtract(BigNumber y) 
+	{
+		
+		return (add(y.negate()));
 	}
 
 	/**
