@@ -319,12 +319,6 @@ public class BigNumber
 		}
 		return rem;
 	}
-	
-	public BigNumber subtract(BigNumber y) 
-	{
-		
-		return (add(y.negate()));
-	}
 
 	/**
 	 * @author Abby Beizer
