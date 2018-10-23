@@ -605,6 +605,12 @@ public class BigNumber
 	}
 	
 	//This version of factor works but is slow
+	/**
+	 * @author David Liotta
+	 * @return a list of the factors of the number
+	 * @throws InvalidFormatException
+	 * This method uses the trial division method
+	 */
 	/*
 	public LinkedList factor() throws InvalidFormatException {
 		LinkedList<BigNumber> factors = new LinkedList<BigNumber>();
@@ -638,6 +644,54 @@ public class BigNumber
 		        factors.add(y);
 		    }
 		return factors;
+	}
+	*/
+	
+	/**
+	 * @author David Liotta
+	 * This is a factoring algorithm that utilizes the Wheel factorization method
+	 * It is supposed to be faster than the trial division method
+	 */
+	/*
+	public LinkedList<BigNumber> factor() {
+		boolean test = false;
+		LinkedList<BigNumber> factors = new LinkedList<BigNumber>();
+		BigNumber n = this;
+		BigNumber zero = new BigNumber("0");
+		BigNumber one = new BigNumber("0");
+		BigNumber two = new BigNumber("2");
+		BigNumber tr = new BigNumber("3");
+		BigNumber fi = new BigNumber("5");
+		BigNumber sv = new BigNumber("7");
+		
+		while(n.getMod(two).equals(zero)) {
+		   factors.add(two);
+		   n = n.divide(two);
+		}
+		while(n.getMod(tr).equals(zero)) {
+			   factors.add(tr);
+			   n = n.divide(tr);
+		}
+		while(n.getMod(fi).equals(zero)) {
+			   factors.add(fi);
+			   n = n.divide(fi);
+		}
+		
+		BigNumber i = one;
+		while(sv.multiply(sv).compareTo(n) <= 0) {
+			if(n.getMod(sv).equals(zero)) {
+				   factors.add(sv);
+				   n = n.divide(sv);
+			}else {
+		      sv = sv.add(i);
+		      if(i.compareTo(new BigNumber("8")) < 0 )
+		    	  i = i.add(one);
+		      else 
+		    	  i= one;
+			}
+		}
+	factors.add(n);
+	return factors;
 	}
 	*/
 
